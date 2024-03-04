@@ -71,6 +71,25 @@ public class Main {
                     StdOut.println(Arrays.toString(weighted.getPointers()));
                 }
             }
+
+            if(input.equals("compressed")){
+                StdOut.println("Enter N");
+                int N = StdIn.readInt();
+                Compressed compressed = new Compressed(N);
+                StdOut.println(Arrays.toString(compressed.getPointers()));
+                while (!StdIn.isEmpty()){
+                    StdOut.println("Enter p");
+                    int p = StdIn.readInt();
+                    StdOut.println("Enter q");
+                    int q = StdIn.readInt();
+                    System.out.println("Result " + p + " - " + q);
+                    if(!compressed.connected(p, q)){
+                        compressed.union(p, q);
+                        System.out.println("Union for " + p + " " + q);
+                    }
+                    StdOut.println(Arrays.toString(compressed.getPointers()));
+                }
+            }
         }
 
     }
