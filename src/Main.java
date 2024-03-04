@@ -52,6 +52,25 @@ public class Main {
                     StdOut.println(Arrays.toString(quickUnion.getId()));
                 }
             }
+
+            if(input.equals("weighted")){
+                StdOut.println("Enter N");
+                int N = StdIn.readInt();
+                Weighted weighted = new Weighted(N);
+                StdOut.println(Arrays.toString(weighted.getPointers()));
+                while (!StdIn.isEmpty()){
+                    StdOut.println("Enter p");
+                    int p = StdIn.readInt();
+                    StdOut.println("Enter q");
+                    int q = StdIn.readInt();
+                    System.out.println("Result " + p + " - " + q);
+                    if(!weighted.connected(p, q)){
+                        weighted.union(p, q);
+                        System.out.println("Union for " + p + " " + q);
+                    }
+                    StdOut.println(Arrays.toString(weighted.getPointers()));
+                }
+            }
         }
 
     }
