@@ -1,18 +1,15 @@
 import java.util.Arrays;
-import java.util.Scanner;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
         boolean shouldRunClient = true;
 
         while(shouldRunClient){
-            System.out.println("We are running the client...\n");
+            StdOut.println("Running client");
 
-            String input = scanner.nextLine();
+            String input = StdIn.readString();
 
             if(input.equals("exit")){
                 System.out.println("Exiting...");
@@ -43,8 +40,9 @@ public class Main {
                 QuickUnion quickUnion = new QuickUnion(N);
                 StdOut.println(Arrays.toString(quickUnion.getId()));
                 while (!StdIn.isEmpty()){
-                    StdOut.println("Enter p and q");
+                    StdOut.println("Enter p");
                     int p = StdIn.readInt();
+                    StdOut.println("Enter q");
                     int q = StdIn.readInt();
                     System.out.println("Result " + p + " - " + q);
                     if(!quickUnion.connected(p, q)){
