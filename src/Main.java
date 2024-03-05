@@ -90,6 +90,13 @@ public class Main {
                     StdOut.println(Arrays.toString(compressed.getPointers()));
                 }
             }
+
+            if(input.equals("percolation")){
+                StdOut.println("Percolation: Enter n");
+                int n = StdIn.readInt();
+                Percolation percolation = new Percolation(n);
+                percolation.check();
+            }
         }
 
     }
