@@ -3,43 +3,51 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import java.util.Arrays;
 
 public class Percolation {
-    private WeightedQuickUnionUF grid;
+    private WeightedQuickUnionCopy grid;
     private boolean[] openState;
     private int gridSize;
 
-    public Percolation(int n){
-        if(n < 1){
+    public Percolation(int n) {
+        if (n < 1) {
             throw new IllegalArgumentException("n cannot be lower than 1");
         }
         setGridSize(n);
         int totalItems = n * (n + 2);
-        grid = new WeightedQuickUnionUF(totalItems);
+        grid = new WeightedQuickUnionCopy(totalItems);
         boolean[] initialStates = new boolean[totalItems];
-        for(int i = 0; i < totalItems; i++){
-            if(i < n || i > (n * n) + n - 1){
-                System.out.println("we get 1");
+        for (int i = 0; i < totalItems - 1; i++) {
+            boolean isOnFirstRow = i < n;
+            boolean nextIsOnFirstRow = i + 1 < n;
+            boolean isOnLastRow = i > (n * n) + n - 1;
+            if (isOnFirstRow) {
                 initialStates[i] = true;
+                if (nextIsOnFirstRow) {
+                    grid.union(i, i + 1);
+                }
+            } else if (isOnLastRow) {
+                initialStates[i] = true;
+                grid.union(i, i + 1);
+
             } else {
-                System.out.println("we get 2");
                 initialStates[i] = false;
             }
         }
         setOpenState(initialStates);
     }
 
-    private int xyTo1D(int row, int col){
+    private int xyTo1D(int row, int col) {
         return row * gridSize + col;
     }
 
-    private void validateIndices(int row, int col ){
-        if(row - 1 < 0 || col - 1 < 0){
+    private void validateIndices(int row, int col) {
+        if (row - 1 < 0 || col - 1 < 0) {
             throw new IllegalArgumentException("Row and col cannot be below 1");
         } else if (row > gridSize || col > gridSize) {
             throw new IllegalArgumentException("Row and col cannot be greater than n");
         }
     }
 
-    public boolean isOpen(int row, int col){
+    public boolean isOpen(int row, int col) {
         validateIndices(row, col);
         int rowIndex = row - 1;
         int colIndex = col - 1;
@@ -47,22 +55,22 @@ public class Percolation {
         return openState[index];
     }
 
-    public void open(int row, int col){
+    public void open(int row, int col) {
         validateIndices(row, col);
         int rowIndex = row - 1;
         int colIndex = col - 1;
         int index = xyTo1D(rowIndex, colIndex);
         boolean notOpenYet = !openState[index];
-        if(notOpenYet){
+        if (notOpenYet) {
 
         }
     }
 
-    public WeightedQuickUnionUF getGrid() {
+    public WeightedQuickUnionCopy getGrid() {
         return grid;
     }
 
-    public void setGrid(WeightedQuickUnionUF grid) {
+    public void setGrid(WeightedQuickUnionCopy grid) {
         this.grid = grid;
     }
 
@@ -82,10 +90,12 @@ public class Percolation {
         this.openState = openState;
     }
 
-    public void check(){
+    public void check() {
         System.out.println("Open states");
         System.out.println(Arrays.toString(getOpenState()));
         System.out.println("Grid size");
         System.out.println(getGridSize());
+        System.out.println("Weighted union data structure");
+        System.out.println(Arrays.toString(grid.getParent()));
     }
 }
