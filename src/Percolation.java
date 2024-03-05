@@ -36,11 +36,11 @@ public class Percolation {
     }
 
     private int xyTo1D(int row, int col) {
-        return row * gridSize + col;
+        return row * gridSize + col - 1;
     }
 
     private void validateIndices(int row, int col) {
-        if (row - 1 < 0 || col - 1 < 0) {
+        if (row < 1 || col < 1) {
             throw new IllegalArgumentException("Row and col cannot be below 1");
         } else if (row > gridSize || col > gridSize) {
             throw new IllegalArgumentException("Row and col cannot be greater than n");
@@ -49,20 +49,35 @@ public class Percolation {
 
     public boolean isOpen(int row, int col) {
         validateIndices(row, col);
-        int rowIndex = row - 1;
-        int colIndex = col - 1;
-        int index = xyTo1D(rowIndex, colIndex);
+        int index = xyTo1D(row, col);
+        return openState[index];
+    }
+
+    private boolean internalIsOpen(int row, int col) {
+        int index = xyTo1D(row, col);
+        System.out.println("is upper open" + openState[index]);
         return openState[index];
     }
 
     public void open(int row, int col) {
         validateIndices(row, col);
-        int rowIndex = row - 1;
-        int colIndex = col - 1;
-        int index = xyTo1D(rowIndex, colIndex);
+        int index = xyTo1D(row, col);
+        System.out.println("index is " + index);
         boolean notOpenYet = !openState[index];
         if (notOpenYet) {
+            tryUpperUnion(row, col, index);
+        }
+    }
 
+    private void tryUpperUnion(int row, int col, int index){
+        if(row > 0){
+            int upperRow = row - 1;
+            boolean isAboveOpen = internalIsOpen(upperRow, col);
+            if(isAboveOpen){
+                int upperIndex = xyTo1D(upperRow, col);
+                System.out.println("upperIndex is " + upperIndex);
+                grid.union(index, upperIndex);
+            }
         }
     }
 
