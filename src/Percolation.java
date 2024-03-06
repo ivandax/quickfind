@@ -16,20 +16,17 @@ public class Percolation {
         grid = new WeightedQuickUnionCopy(totalItems);
         boolean[] initialStates = new boolean[totalItems];
         for (int i = 0; i < totalItems - 1; i++) {
-            boolean isOnFirstRow = i < n;
-            boolean nextIsOnFirstRow = i + 1 < n;
-            boolean isOnLastRow = i > (n * n) + n - 1;
-            if (isOnFirstRow) {
+            boolean isOnFirstRow = i < n - 1;
+            boolean isOnLastRow = i >= (n * n) + n && i < totalItems - 1;
+            if (isOnFirstRow || isOnLastRow) {
                 initialStates[i] = true;
-                if (nextIsOnFirstRow) {
-                    grid.union(i, i + 1);
-                }
-            } else if (isOnLastRow) {
-                initialStates[i] = true;
+                initialStates[i + 1] = true;
                 grid.union(i, i + 1);
-
             } else {
-                initialStates[i] = false;
+                boolean currentState = initialStates[i];
+                if(!currentState){
+                    initialStates[i] = false;
+                }
             }
         }
         setOpenState(initialStates);
@@ -55,17 +52,19 @@ public class Percolation {
 
     private boolean internalIsOpen(int row, int col) {
         int index = xyTo1D(row, col);
-        System.out.println("is upper open" + openState[index]);
         return openState[index];
     }
 
     public void open(int row, int col) {
         validateIndices(row, col);
         int index = xyTo1D(row, col);
-        System.out.println("index is " + index);
         boolean notOpenYet = !openState[index];
         if (notOpenYet) {
             tryUpperUnion(row, col, index);
+            tryRightUnion(row, col, index);
+            tryLowerUnion(row, col, index);
+            tryLeftUnion(row, col, index);
+            openState[index] = true;
         }
     }
 
@@ -75,8 +74,40 @@ public class Percolation {
             boolean isAboveOpen = internalIsOpen(upperRow, col);
             if(isAboveOpen){
                 int upperIndex = xyTo1D(upperRow, col);
-                System.out.println("upperIndex is " + upperIndex);
                 grid.union(index, upperIndex);
+            }
+        }
+    }
+
+    private void tryRightUnion(int row, int col, int index){
+        if(col < gridSize){
+            int rightCol = col + 1;
+            boolean isRightOpen = internalIsOpen(row, rightCol);
+            if(isRightOpen){
+                int rightIndex = xyTo1D(row, rightCol);
+                grid.union(index, rightIndex);
+            }
+        }
+    }
+
+    private void tryLowerUnion(int row, int col, int index){
+        if(row <= gridSize){
+            int belowRow = row + 1;
+            boolean isBelowOpen = internalIsOpen(belowRow, col);
+            if(isBelowOpen){
+                int belowIndex = xyTo1D(belowRow, col);
+                grid.union(index, belowIndex);
+            }
+        }
+    }
+
+    private void tryLeftUnion(int row, int col, int index){
+        if(col > 0){
+            int leftCol = col - 1;
+            boolean isLeftOpen = internalIsOpen(row, leftCol);
+            if(isLeftOpen){
+                int leftIndex = xyTo1D(row, leftCol);
+                grid.union(index, leftIndex);
             }
         }
     }

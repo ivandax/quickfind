@@ -96,8 +96,7 @@ public class Main {
                 int n = StdIn.readInt();
                 Percolation percolation = new Percolation(n);
                 percolation.check();
-                percolation.open(1, 1);
-                percolation.open(1, 3);
+                percolation.open(2, 2);
                 percolation.check();
             }
         }
