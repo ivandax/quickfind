@@ -96,8 +96,25 @@ public class Main {
                 int n = StdIn.readInt();
                 Percolation percolation = new Percolation(n);
                 percolation.check();
+                percolation.open(1, 1);
+                percolation.open(1, 2);
                 percolation.open(2, 2);
                 percolation.check();
+                percolation.open(2, 3);
+                percolation.open(3, 3);
+                percolation.check();
+            }
+
+            if(input.equals("copy")){
+                StdOut.println("Percolation: Enter n");
+                WeightedQuickUnionCopy structure = new WeightedQuickUnionCopy(8);
+                System.out.println(Arrays.toString(structure.getParent()));
+                structure.union(0, 1);
+                System.out.println(Arrays.toString(structure.getParent()));
+                structure.union(6, 7);
+                System.out.println(Arrays.toString(structure.getParent()));
+                structure.union(0, 6);
+                System.out.println(Arrays.toString(structure.getParent()));
             }
         }
 

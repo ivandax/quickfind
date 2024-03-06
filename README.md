@@ -25,3 +25,10 @@ Configure Module Dependencies:
 - Verify Import:
 
 Now, you should be able to import edu.princeton.cs.algs4.StdIn in your Java classes without any errors.
+
+# Compiling
+
+We can use the main() of InteractivePercolationVisualizer to 
+start an interactive viewer that tests our implementation of the
+percolation class.
+

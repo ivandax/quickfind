@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import java.util.Arrays;
 
 public class Percolation {
-    private WeightedQuickUnionCopy grid;
+    private WeightedQuickUnionUF grid;
     private boolean[] openState;
     private int gridSize;
 
@@ -13,7 +13,7 @@ public class Percolation {
         }
         setGridSize(n);
         int totalItems = n * (n + 2);
-        grid = new WeightedQuickUnionCopy(totalItems);
+        grid = new WeightedQuickUnionUF(totalItems);
         boolean[] initialStates = new boolean[totalItems];
         for (int i = 0; i < totalItems - 1; i++) {
             boolean isOnFirstRow = i < n - 1;
@@ -24,7 +24,7 @@ public class Percolation {
                 grid.union(i, i + 1);
             } else {
                 boolean currentState = initialStates[i];
-                if(!currentState){
+                if (!currentState) {
                     initialStates[i] = false;
                 }
             }
@@ -68,55 +68,80 @@ public class Percolation {
         }
     }
 
-    private void tryUpperUnion(int row, int col, int index){
-        if(row > 0){
+    public boolean percolates() {
+        int upperIndex = grid.find(0);
+        int firstIndexBottom = grid.find(gridSize * gridSize + gridSize);
+        return upperIndex == firstIndexBottom;
+    }
+
+    public boolean isFull(int row, int col) {
+        validateIndices(row, col);
+        int upperIndex = grid.find(0);
+        int index = xyTo1D(row, col);
+        return index == upperIndex;
+    }
+
+    public int numberOfOpenSites(){
+        int trueCount = 0;
+
+        for (boolean value : openState) {
+            if (value) {
+                trueCount++;
+            }
+        }
+
+        return trueCount - (gridSize * 2);
+    }
+
+    private void tryUpperUnion(int row, int col, int index) {
+        if (row > 0) {
             int upperRow = row - 1;
             boolean isAboveOpen = internalIsOpen(upperRow, col);
-            if(isAboveOpen){
+            if (isAboveOpen) {
                 int upperIndex = xyTo1D(upperRow, col);
                 grid.union(index, upperIndex);
             }
         }
     }
 
-    private void tryRightUnion(int row, int col, int index){
-        if(col < gridSize){
+    private void tryRightUnion(int row, int col, int index) {
+        if (col < gridSize) {
             int rightCol = col + 1;
             boolean isRightOpen = internalIsOpen(row, rightCol);
-            if(isRightOpen){
+            if (isRightOpen) {
                 int rightIndex = xyTo1D(row, rightCol);
                 grid.union(index, rightIndex);
             }
         }
     }
 
-    private void tryLowerUnion(int row, int col, int index){
-        if(row <= gridSize){
+    private void tryLowerUnion(int row, int col, int index) {
+        if (row <= gridSize) {
             int belowRow = row + 1;
             boolean isBelowOpen = internalIsOpen(belowRow, col);
-            if(isBelowOpen){
+            if (isBelowOpen) {
                 int belowIndex = xyTo1D(belowRow, col);
                 grid.union(index, belowIndex);
             }
         }
     }
 
-    private void tryLeftUnion(int row, int col, int index){
-        if(col > 0){
+    private void tryLeftUnion(int row, int col, int index) {
+        if (col > 0) {
             int leftCol = col - 1;
             boolean isLeftOpen = internalIsOpen(row, leftCol);
-            if(isLeftOpen){
+            if (isLeftOpen) {
                 int leftIndex = xyTo1D(row, leftCol);
                 grid.union(index, leftIndex);
             }
         }
     }
 
-    public WeightedQuickUnionCopy getGrid() {
+    public WeightedQuickUnionUF getGrid() {
         return grid;
     }
 
-    public void setGrid(WeightedQuickUnionCopy grid) {
+    public void setGrid(WeightedQuickUnionUF grid) {
         this.grid = grid;
     }
 
@@ -141,7 +166,9 @@ public class Percolation {
         System.out.println(Arrays.toString(getOpenState()));
         System.out.println("Grid size");
         System.out.println(getGridSize());
-        System.out.println("Weighted union data structure");
-        System.out.println(Arrays.toString(grid.getParent()));
+//        System.out.println("Weighted union data structure");
+//        System.out.println(Arrays.toString(grid.getParent()));
+        System.out.println("Does it percolate? " + percolates());
+        System.out.println("Number of open sites " + numberOfOpenSites());
     }
 }
