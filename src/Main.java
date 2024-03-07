@@ -107,7 +107,6 @@ public class Main {
 
             if(input.equals("stats")){
                 PercolationStats stats = new PercolationStats(3, 5);
-                stats.check();
             }
         }
 
