@@ -105,16 +105,9 @@ public class Main {
                 percolation.check();
             }
 
-            if(input.equals("copy")){
-                StdOut.println("Percolation: Enter n");
-                WeightedQuickUnionCopy structure = new WeightedQuickUnionCopy(8);
-                System.out.println(Arrays.toString(structure.getParent()));
-                structure.union(0, 1);
-                System.out.println(Arrays.toString(structure.getParent()));
-                structure.union(6, 7);
-                System.out.println(Arrays.toString(structure.getParent()));
-                structure.union(0, 6);
-                System.out.println(Arrays.toString(structure.getParent()));
+            if(input.equals("stats")){
+                PercolationStats stats = new PercolationStats(3, 5);
+                stats.check();
             }
         }
 

@@ -78,7 +78,7 @@ public class Percolation {
         validateIndices(row, col);
         int upperIndex = grid.find(0);
         int index = xyTo1D(row, col);
-        return index == upperIndex;
+        return grid.find(index) == upperIndex;
     }
 
     public int numberOfOpenSites(){
