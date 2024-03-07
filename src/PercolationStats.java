@@ -2,10 +2,8 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
-import java.util.Arrays;
-
 public class PercolationStats {
-    double[] thresholds = {};
+    private double[] thresholds = {};
 
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0) {
@@ -67,8 +65,6 @@ public class PercolationStats {
         return StdStats.stddev(thresholds);
     }
 
-    ;
-
     public double confidenceLo() {
         return mean() - stddev();
     }
@@ -77,15 +73,5 @@ public class PercolationStats {
 
     public double confidenceHi() {
         return mean() + stddev();
-    }
-
-    ;
-
-    public double[] getThresholds() {
-        return thresholds;
-    }
-
-    public void setThresholds(double[] thresholds) {
-        this.thresholds = thresholds;
     }
 }

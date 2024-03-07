@@ -1,9 +1,7 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
-import java.util.Arrays;
-
 public class Percolation {
-    private WeightedQuickUnionUF grid;
+    private final WeightedQuickUnionUF grid;
     private boolean[] openState;
     private int gridSize;
 
@@ -81,7 +79,7 @@ public class Percolation {
         return grid.find(index) == upperIndex;
     }
 
-    public int numberOfOpenSites(){
+    public int numberOfOpenSites() {
         int trueCount = 0;
 
         for (boolean value : openState) {
@@ -137,38 +135,11 @@ public class Percolation {
         }
     }
 
-    public WeightedQuickUnionUF getGrid() {
-        return grid;
-    }
-
-    public void setGrid(WeightedQuickUnionUF grid) {
-        this.grid = grid;
-    }
-
-    public int getGridSize() {
-        return gridSize;
-    }
-
-    public void setGridSize(int gridSize) {
+    private void setGridSize(int gridSize) {
         this.gridSize = gridSize;
     }
 
-    public boolean[] getOpenState() {
-        return openState;
-    }
-
-    public void setOpenState(boolean[] openState) {
+    private void setOpenState(boolean[] openState) {
         this.openState = openState;
-    }
-
-    public void check() {
-        System.out.println("Open states");
-        System.out.println(Arrays.toString(getOpenState()));
-        System.out.println("Grid size");
-        System.out.println(getGridSize());
-//        System.out.println("Weighted union data structure");
-//        System.out.println(Arrays.toString(grid.getParent()));
-        System.out.println("Does it percolate? " + percolates());
-        System.out.println("Number of open sites " + numberOfOpenSites());
     }
 }

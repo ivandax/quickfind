@@ -95,14 +95,14 @@ public class Main {
                 StdOut.println("Percolation: Enter n");
                 int n = StdIn.readInt();
                 Percolation percolation = new Percolation(n);
-                percolation.check();
+//                percolation.check();
                 percolation.open(1, 1);
                 percolation.open(1, 2);
                 percolation.open(2, 2);
-                percolation.check();
+//                percolation.check();
                 percolation.open(2, 3);
                 percolation.open(3, 3);
-                percolation.check();
+//                percolation.check();
             }
 
             if(input.equals("stats")){
