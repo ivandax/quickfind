@@ -125,7 +125,7 @@ public class Percolation {
     }
 
     private void tryLeftUnion(int row, int col, int index) {
-        if (col > 0) {
+        if (col > 1) {
             int leftCol = col - 1;
             boolean isLeftOpen = internalIsOpen(row, leftCol);
             if (isLeftOpen) {

@@ -1,4 +1,4 @@
-## How to add the alg4 library from Princeton (from chatGPT)
+## How to add the alg4 library
 
 Download the algs4.jar Library:
 
