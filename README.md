@@ -26,9 +26,37 @@ Configure Module Dependencies:
 
 Now, you should be able to import edu.princeton.cs.algs4.StdIn in your Java classes without any errors.
 
-# Compiling
+## Testing the Percolation class
 
 We can use the main() of InteractivePercolationVisualizer to 
 start an interactive viewer that tests our implementation of the
 percolation class.
+
+## Compiling a java file
+
+Compiling a simple java file and add it to the root:
+
+` javac src/Sample.java -d .`
+
+We can then run it with:
+
+` java Sample`
+
+When using the Intellij, with the configuration described above, we can
+run the classes from the Intellij UI, but the packages will not be recognized
+when compiling and running from the command line.
+
+We can do these steps to do so, for example:
+
+`javac -cp lib/algs4.jar src/ThreeSum.java -d .`
+
+This will create a .class compiled file:
+
+`ThreesSum.class`
+
+Then we can:
+
+`java -cp ".;lib/algs4.jar" ThreeSum numbers.txt`
+
+
 
