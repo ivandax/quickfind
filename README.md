@@ -58,5 +58,9 @@ Then we can:
 
 `java -cp ".;lib/algs4.jar" ThreeSum numbers.txt`
 
+## Reformat file
+
+`ctrl + alt + L`
+
 
 
